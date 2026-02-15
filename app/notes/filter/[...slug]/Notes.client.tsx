@@ -10,14 +10,15 @@ import Pagination from "@/components/Pagination/Pagination";
 import { NoteList } from "@/components/NoteList/NoteList";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
-import { useParams } from "next/navigation";
 
-export default function NotesClient() {
+interface NotesClientProps {
+  tag: string | undefined;
+}
+
+export default function NotesClient({ tag }: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValues, setSearchValues] = useState("");
-  const { slug } = useParams<{ slug: string[] }>();
-  let tag: string | undefined = slug[0];
   if (tag === "all") tag = undefined;
   const { data } = useQuery({
     queryKey: ["note", page, searchValues, tag],
